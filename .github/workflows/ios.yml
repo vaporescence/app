@@ -8,22 +8,27 @@ on:
 
 jobs:
   build:
-    name: Build and Test iOS Simulator
+    name: Build iOS Simulator
     runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Detect device
+      - name: Install CocoaPods
         run: |
-          xcrun xctrace list devices
+          sudo gem install cocoapods
+
+      - name: Install Pods
+        working-directory: iosApp
+        run: |
+          pod install
 
       - name: Build
         working-directory: iosApp
         run: |
           xcodebuild \
-            -project iosApp.xcodeproj \
+            -workspace iosApp.xcworkspace \
             -scheme iosApp \
             -configuration Debug \
             -sdk iphonesimulator \
@@ -33,7 +38,7 @@ jobs:
         working-directory: iosApp
         run: |
           xcodebuild \
-            -project iosApp.xcodeproj \
+            -workspace iosApp.xcworkspace \
             -scheme iosApp \
             -sdk iphonesimulator \
             test
