@@ -229,4 +229,6 @@ interface BuildConfigInterface {
   fun isDebug(): Boolean
 }
 
-expect object BuildConfig : BuildConfigInterface
+object BuildConfig {
+  fun isDebug(): Boolean = false
+}
