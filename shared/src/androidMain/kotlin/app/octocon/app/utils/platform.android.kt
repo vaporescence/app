@@ -11,7 +11,7 @@ actual interface PlatformUtilities : CommonPlatformUtilities {
 
 actual interface PlatformDelegate
 
-actual object BuildConfig : BuildConfigInterface {
+actual object AppBuildConfig : BuildConfigInterface {
   var applicationContext: Context? = null
 
   override fun isDebug(): Boolean {
