@@ -20,9 +20,9 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Build Kotlin Shared Framework
+      - name: Build Kotlin shared module
         run: |
-          ./gradlew :shared:generateDummyFramework
+          ./gradlew :shared:build
 
       - name: Install CocoaPods
         run: |
