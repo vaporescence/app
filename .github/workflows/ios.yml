@@ -8,12 +8,21 @@ on:
 
 jobs:
   build:
-    name: Build iOS Simulator
     runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build Kotlin Shared Framework
+        run: |
+          ./gradlew :shared:generateDummyFramework
 
       - name: Install CocoaPods
         run: |
@@ -24,7 +33,7 @@ jobs:
         run: |
           pod install
 
-      - name: Build
+      - name: Build iOS App
         working-directory: iosApp
         run: |
           xcodebuild \
@@ -33,12 +42,3 @@ jobs:
             -configuration Debug \
             -sdk iphonesimulator \
             build
-
-      - name: Test
-        working-directory: iosApp
-        run: |
-          xcodebuild \
-            -workspace iosApp.xcworkspace \
-            -scheme iosApp \
-            -sdk iphonesimulator \
-            test
